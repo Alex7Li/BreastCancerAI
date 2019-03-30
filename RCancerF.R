@@ -34,9 +34,9 @@ stepboth = stepAIC(null, scope = list(lower = null, upper = full),
 
 stepboth
 
-full = glm(diagnosis ~ smoothness_worst * texture_worst * symmetry_worst * 
-             compactness_se * concavity_mean * texture_se * area_se * 
-             concave_points_worst * area_worst, 
+full = glm(diagnosis ~ perimeter_worst * smoothness_worst * texture_mean * 
+             area_se * symmetry_worst * compactness_se * concavity_mean * 
+             concave_points_worst * compactness_mean, 
            family = binomial, data = cancer)
 
 stepboth = stepAIC(null, scope = list(lower = null, upper = full),
@@ -64,4 +64,6 @@ tn = sum(ifelse(pred == 0 & true_val == 0, 1, 0))
 fn = sum(ifelse(pred == 1 & true_val == 0, 1, 0))
 fp = sum(ifelse(pred == 0 & true_val == 1, 1, 0))
 
-(tn + tp)/ 114
+acc = (tn + tp)/ 114
+err = 1 - acc
+err * 100
