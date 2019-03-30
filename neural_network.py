@@ -1,8 +1,10 @@
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
-from torch.utils.data import DataLoader
 import normalizer
+import numpy as np
+
+depth = 0
 
 
 class Net(nn.Module):
@@ -12,7 +14,7 @@ class Net(nn.Module):
         self.relu = nn.ReLU()
         self.linears = []
         self.relus = []
-        for i in range(300):
+        for i in range(depth):
             self.linears.append(nn.Linear(hidden_size, hidden_size))
             self.relus.append(nn.ReLU())
         self.fc2 = nn.Linear(hidden_size, num_classes)
@@ -22,7 +24,7 @@ class Net(nn.Module):
     def forward(self, x):
         out = self.fc1(x)
         out = self.relu(out)
-        for i in range(300):
+        for i in range(depth):
             out = self.linears[i](out)
             out = self.relus[i](out)
         out = self.fc2(out)
@@ -31,13 +33,13 @@ class Net(nn.Module):
 
 
 if __name__ == "__main__":
-    train_features, train_labels, test_features, test_labels = normalizer.load_data(
-        1)
+    train_features, train_labels, test_features, test_labels = \
+        normalizer.load_data(1, range(30))
 
     input_size = 30
     hidden_size = 10
     num_classes = 1
-    num_epochs = 300
+    num_epochs = 20
     batch_size = 38
     learning_rate = .001
 
@@ -52,6 +54,7 @@ if __name__ == "__main__":
 
     # Training the FNN Model
     for epoch in range(num_epochs):
+        train_features = train_features[np.random.permutation(len(train_features))]
         # Load a batch of images with its (index, data, class)
         for i in range(0, len(train_features), batch_size):
             features = Variable(train_features[i:i + batch_size]).float()

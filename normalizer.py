@@ -3,7 +3,7 @@ import csv
 from sklearn.preprocessing import normalize
 
 
-def load_data(random_seed):
+def load_data(random_seed, features_to_use):
     data = np.genfromtxt('data.csv', delimiter=',', encoding="utf8")
     # Remove labels
     data = np.delete(data, 0, axis=0)
@@ -21,7 +21,7 @@ def load_data(random_seed):
     labels = np.array(data[:, 0:1])
 
     # normalize data
-    features = normalize(features, axis=0) * np.sqrt(size)
+    features = normalize(features[:, features_to_use], axis=0) * np.sqrt(size)
 
     # read class data
     i = -2
@@ -51,4 +51,4 @@ def load_data(random_seed):
 
 
 if __name__ == "__main__":
-    load_data(1)
+    load_data(1, [0, 3, 5, 29])
