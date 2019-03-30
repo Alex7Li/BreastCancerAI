@@ -1,11 +1,9 @@
 import normalizer
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import confusion_matrix
-
-train_features, train_labels, test_features, test_labels = normalizer.load_data(
-    1)
-decisionTree = DecisionTreeClassifier()
-decisionTree.fit(train_features, train_labels)
+train_features, train_labels, test_features, test_labels=normalizer.load_data(1)
+decisionTree = DecisionTreeClassifier( max_depth=4)
+decisionTree.fit( train_features, train_labels)
 labels = decisionTree.predict(test_features)
 print(labels)
 tn, fp, fn, tp = confusion_matrix(labels, test_labels).ravel();
