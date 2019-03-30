@@ -6,7 +6,7 @@ from sklearn.preprocessing import normalize
 def load_data(random_seed):
     data = np.genfromtxt('data.csv', delimiter=',', encoding="utf8")
     # Remove labels
-    data = np.delete(data, (0), axis=0)
+    data = np.delete(data, 0, axis=0)
 
     # Randomize Data
     size = len(data)
@@ -18,7 +18,7 @@ def load_data(random_seed):
     # Split up data
     train_size = (size * 4) // 5
     features = data[:, 1:train_size]
-    labels = np.array(data[:, 0:1], dtype=np.int32)
+    labels = np.array(data[:, 0:1])
 
     # normalize data
     features = normalize(features, axis=0) * np.sqrt(size)
