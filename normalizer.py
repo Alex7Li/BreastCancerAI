@@ -18,7 +18,7 @@ def load_data(random_seed):
     # Split up data
     train_size = (size * 4) // 5
     features = data[:, 1:train_size]
-    labels = np.array(data[:, 0:1],dtype=np.int32)
+    labels = np.array(data[:, 0:1], dtype=np.int32)
 
     # normalize data
     features = normalize(features, axis=0) * np.sqrt(size)
@@ -38,10 +38,10 @@ def load_data(random_seed):
     labels = labels[perm]
 
     # split data
-    train_features = features[:, 1:train_size]
-    test_features = features[:, train_size:size]
-    train_labels = labels[:, 0:1]
-    test_labels = labels[:, 0:1]
+    train_features = features[1:train_size]
+    test_features = features[train_size:size]
+    train_labels = labels[1:train_size]
+    test_labels = labels[train_size:size]
 
     train_data = np.concatenate((train_labels, train_features), axis=1)
     test_data = np.concatenate((test_labels, test_features), axis=1)
