@@ -26,6 +26,8 @@ def load_data(random_seed):
     train_size = (size * 4) // 5
     train_data = my_data[0:train_size]
     test_data = my_data[train_size:size]
+    np.savetxt("test_data.csv", test_data,delimiter=',')
+    np.savetxt("train_data.csv", train_data,delimiter=',')
     train_features = train_data[:, 1:train_size]
     test_features = test_data[:, 1:train_size]
     train_labels = train_data[:, 0:1]
